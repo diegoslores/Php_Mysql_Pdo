@@ -18,5 +18,13 @@ interface Profesor {
 	* @return array<Alumno> Retorna un array con todos los alumnos cuyo email es de un dominio concreto. */
 	public function get_all_alumnos_con_email_de_dominio(string $pDominio);
 	
+	/** @param $pId Un id de alumno 
+	* @return Alumno Retorna el alumno coincidente con ese criterio de búsqueda */
+	public function get_alumno_by_id($pId);
+	
+	/** @param $pEmail Un email de alumno 
+	* @return Alumno Retorna el alumno coincidente con ese criterio de búsqueda */
+	public function get_alumno_by_email(string $pEmail);
+	
 }
 
