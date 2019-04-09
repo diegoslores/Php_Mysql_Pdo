@@ -12,7 +12,7 @@ final class ProfesorTest extends TestCase {
 	private static $log;
 	
 	public static function setUpBeforeClass(){
-		Logger::configure('config.xml');
+		Logger::configure('configs/log4php-config.xml');
 		self::$log = Logger::getLogger("test");
 	}
 	

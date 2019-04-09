@@ -18,6 +18,10 @@ Podrás documentarte en el [Manual de MySQLi](http://php.net/manual/es/book.mysq
 
 ## Pre-requisitos
 
+Debes asegurarte que:
+* Tienes instalado composer. 
+* Tienes habilitado el módulo `php-mysql`. Puedes instalarlo con `sudo apt-get install php-mysql`
+
 Como requisitos previos se asumen nociones básicas de programación y conocimientos previos de bases de datos y el lenguaje de consulta SQL.
 
 * Selección de herramientas de programación
