@@ -1,4 +1,5 @@
 <?php
+require_once("Profesor.php");
 
 class Profesor extends Profesor {
 	

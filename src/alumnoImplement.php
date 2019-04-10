@@ -1,8 +1,14 @@
 <?php
+require_once("Alumno.php");
 
 Class Alumno extends Alumno{
 
   private $id;
+  private $firstName;
+  private $lastName;  
+  private $email;
+  private $birthdate;
+  private $dischargeDate;
 	
 	public function getId():int{
     echo("cosas");
