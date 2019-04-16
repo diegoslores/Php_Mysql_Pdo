@@ -1,7 +1,7 @@
 <?php
 require_once("Profesor.php");
 
-class Profesor extends Profesor {
+class ProfesorI implements Profesor {
 	
 	public function get_all_alumnos_mayores_de_edad(){
     echo("cosas");

@@ -1,7 +1,7 @@
 <?php
 require_once("Entrada.php");
 
-Class Entrada extends Entrada{
+Class EntradaI implements Entrada{
 	public function getId():int{
     echo("cosas");
   }

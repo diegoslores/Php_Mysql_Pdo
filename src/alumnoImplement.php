@@ -1,41 +1,53 @@
 <?php
 require_once("Alumno.php");
 
-Class Alumno extends Alumno{
+Class AlumnoI implements Alumno{
 
+  //Atributos
   private $id;
   private $firstName;
   private $lastName;  
   private $email;
   private $birthdate;
   private $dischargeDate;
+
+  //Constructor
+  public function __construct($object){
+    $this->id = $object->id;
+    $this->firstName = $object->firstName;
+    $this->lastName = $object->lastName;
+    $this->email = $object->email;
+    $this->birthdate = $object->birthdate;
+    $this->dischargeDate = $object->dischargeDate;
+  }
 	
-	public function getId():int{
-    echo("cosas");
+	public function getId():integer{
+    return $this->id;
   }
 
   public function getFirstName():string{
-    echo("cosas");
+    return $this->firstName;
   }
 
   public function getLastName():string{
-    echo("cosas");
+    return $this->lastName;
   }
 
   public function getEmail(){
-    echo("cosas");
+    return $this->email;
   }
 
 	public function setEmail(string $pEmail){
-    echo("cosas");
+    $this->email = $email;
+    return $this;
   }
 	
 	public function getBirthdate(){
-    echo("cosas");
+    return $this->birthdate;
   }
 
 	public function getDischargeDate():DateTime{
-    echo("cosas");
+    return $this->dischargeDate;
   }
 	
 	public static function get_alumno_by_id($pId){
