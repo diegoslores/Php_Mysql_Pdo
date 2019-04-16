@@ -1,5 +1,8 @@
 .ftpconfig
 *.log
+build/
+cache.properties
+
 
 vendor/
 
