@@ -12,8 +12,8 @@ final class ProfesorTest extends TestCase {
 	private static $log;
 	
 	public static function setUpBeforeClass(){
-		Logger::configure('configs/log4php-config.xml');
-		self::$log = Logger::getLogger("test");
+		/*Logger::configure('configs/log4php-config.xml');
+		self::$log = Logger::getLogger("test");*/
 	}
 	
 	public function test_Fabrica_un_profesor(): void {

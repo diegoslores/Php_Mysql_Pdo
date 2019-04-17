@@ -1,5 +1,5 @@
 <?php
-
+require_once("profesorImplement.php");
 /**
  * Singleton class and factory method
  *
@@ -43,6 +43,6 @@ final class FactoryProfesor {
 	 * @return Profesor Una instancia de profesor cualquiera
      */
 	public function fabrica(): Profesor {
-		//TODO:
+		return new ProfesorI();
 	}
 }
