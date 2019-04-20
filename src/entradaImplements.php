@@ -3,26 +3,26 @@ require_once("Entrada.php");
 
 Class EntradaI implements Entrada{
 	public function getId():int{
-    echo("cosas");
+    return $id;
   }
 	
 	public function getAlumno():Alumno{
-    echo("cosas");
+    return $alumno;
   }
 	
 	public function getTitulo():string{
-    echo("cosas");
+    return $titulo;
   }
 	
 	public function getContent():string{
-    echo("cosas");
+    return $content;
   }
 	
 	public function getDescripction():string{
-    echo("cosas");
+    return $description;
   }
 	
 	public function getDate(){
-    echo("cosas");
+    return $date;
   }
 }

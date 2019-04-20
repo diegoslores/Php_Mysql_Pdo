@@ -14,19 +14,19 @@ Class AlumnoI implements Alumno{
   //Constructor
   public function __construct($object = null){
     if ($object != null) {
-    $this->id = $object->id;
-    $this->firstName = $object->first_name;
-    $this->lastName = $object->last_name;
-    $this->email = $object->email;
-    $this->birthdate = $object->birthdate;
-    $this->dischargeDate = $object->added;
+      $this->id = $object->id;
+      $this->firstName = $object->first_name;
+      $this->lastName = $object->last_name;
+      $this->email = $object->email;
+      $this->birthdate = $object->birthdate;
+      $this->dischargeDate = $object->added;
     }else{
-    $this->id = 1;
-    $this->firstName ="dd";
-    $this->lastName = "dd";
-    $this->email = "dd";
-    $this->birthdate = "dd";
-    $this->dischargeDate = "dd";
+      $this->id = 1;
+      $this->firstName ="name";
+      $this->lastName = "lastname";
+      $this->email = "mail";
+      $this->birthdate = "birth";
+      $this->dischargeDate = "dis";
     }
   }
 	
@@ -60,11 +60,11 @@ Class AlumnoI implements Alumno{
   }
 	
 	public static function get_alumno_by_id($pId){
-    return new AlumnoI();
+    return $pId;
   }
 	
 	public static function get_alumno_by_email(string $pEmail){
-    echo("cosas");
+    return $pEmail;
   }
 	
 	public function tengo_entradas_en_el_blog(): bool{
@@ -72,7 +72,7 @@ Class AlumnoI implements Alumno{
     $result = $conexion->query('select count(id) from posts where author_id = '. $this->id);
     $row = $result->fetch_row();
     if ($row[0] > 0){
-    $flag = true;
+      $flag = true;
     }else{
       $flag = false;
     }
@@ -80,11 +80,20 @@ Class AlumnoI implements Alumno{
   }
 
 	public function soy_mayor_de_edad(): bool{
-    echo("cosas");
+    $conexion = $this->getBaseDatos();
+    $result = $conexion->query('SELECT TIMESTAMPDIFF( YEAR, birthdate, now() ) AS Age from authors where id= '. $this->id);
+    $row = $result->fetch_row();
+    if ($row[0] >=18){
+      $flag = true;
+    }else{
+      $flag = false;
+    }
+    return $flag;
   }
 
 	public function all_mis_entradas_en_el_blog() : array{
-    echo("cosas");
+    $array = [];
+    return $array;
   }
 
 	public function all_mis_entradas_en_el_blog_tituladas(string $pPattern):array{
