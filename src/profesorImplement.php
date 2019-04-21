@@ -13,30 +13,27 @@ class ProfesorI implements Profesor {
 	
 	public function get_all_alumnos_mayores_de_edad(){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where year(now())-year(birthdate) >= 18');
-    $record = $results->fetch_object();
+    $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where year(now())-year(birthdate) >= 18');    
     $misAlumnos = [];
     $alumno;
-      foreach($record as $alumno){
-        $alumno = new alumnoI($record);
-			  array_push($misAlumnos,$alumno);
-      }
-    
+    while($record = $results->fetch_assoc()){
+      print_r($record);
+      $alumno = new alumnoI($record);
+			array_push($misAlumnos,$alumno);
+    }    
     return $alumno;
   }
 	
 	public function get_all_alumnos_menores_de_edad(){
     $conexion = $this->getBaseDatos();
     $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where year(now())-year(birthdate) < 18');
-
-    $record = $results->fetch_object();
     $misAlumnos = [];
     $alumno;
-      foreach($record as $alumno){
-        $alumno = new alumnoI($record);
-			  array_push($misAlumnos,$alumno);
-      }
-    
+    while($record = $results->fetch_assoc()){
+      print_r($record);
+      $alumno = new alumnoI($record);
+			array_push($misAlumnos,$alumno);
+    }
     return $alumno;
   }
 	
@@ -58,6 +55,7 @@ class ProfesorI implements Profesor {
     $record = $results->fetch_object();
     $alumno;
     while($record != null){
+      print_r($record);
       $alumno = new alumnoI($record);
       $record = $results->fetch_object();
     }
@@ -65,7 +63,15 @@ class ProfesorI implements Profesor {
   }	
 
 	public function get_alumno_by_email(string $pEmail){
-    return $email;
+    $conexion = $this->getBaseDatos();
+    $results = $conexion->query("select id, first_name, last_name, email, birthdate, added from authors where email = '$pEmail';");
+    $record = $results->fetch_object();
+    $alumno;
+    while($record != null){
+      $alumno = new alumnoI($record);
+      $record = $results->fetch_object();
+    }
+    return $alumno;
   }
 
   private function getBaseDatos(){
