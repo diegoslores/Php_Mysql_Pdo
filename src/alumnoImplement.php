@@ -92,28 +92,34 @@ Class AlumnoI implements Alumno{
   }
 
 	public function all_mis_entradas_en_el_blog() : array{
-    $array = [];
-    return $array;
+    $conexion = $this->getBaseDatos();
+    $result = $conexion->query('select * from posts where author_id ='. $this->id);
+    $record = $result->fetch_object();
+    $misEntradas = [];    
+    foreach($record as $entrada){
+			array_push($misEntradas,$entrada);
+    }
+    return $misEntradas;
   }
 
 	public function all_mis_entradas_en_el_blog_tituladas(string $pPattern):array{
-    echo("cosas");
+    return $array;  
   }
 
 	public function all_mis_entradas_en_el_blog_contienen(string $pPattern){
-    echo("cosas");
+    return $array;  
   }
 	
 	public function remove_mis_entradas_en_el_blog_tituladas(string $pPattern){
-    echo("cosas");
+    return $array;  
   }
 	
 	public function remove_mis_entradas_en_el_blog_contienen(string $pPattern){
-    echo("cosas");
+    return $array;  
   }
 	
 	public function nueva_entrada_en_blog(string $pTitulo, string $pDescripcion, string $pContenido){
-    echo("cosas");
+    return $array;
   }
   
   private function getBaseDatos(){

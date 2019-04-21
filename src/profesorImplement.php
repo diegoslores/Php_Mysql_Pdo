@@ -8,35 +8,48 @@ class ProfesorI implements Profesor {
 
   //Constructor
   public function __construct(){
-
-    $this->id = 1;
-   
-    
+    $this->id = 1;    
   }
 	
 	public function get_all_alumnos_mayores_de_edad(){
-    $this->getBaseDatos();
-    $mayoresEdad = array();
-    foreach($this->alumnos as $alumno){
-      if($alumno->eresMayorEdad()) array_push($mayoresEdad, $alumno);
-    }
-    return $mayoresEdad;
+    $conexion = $this->getBaseDatos();
+    $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where year(now())-year(birthdate) >= 18');
+    $record = $results->fetch_object();
+    $misAlumnos = [];
+    $alumno;
+      foreach($record as $alumno){
+        $alumno = new alumnoI($record);
+			  array_push($misAlumnos,$alumno);
+      }
+    
+    return $alumno;
   }
 	
 	public function get_all_alumnos_menores_de_edad(){
-    echo("cosas");
+    $conexion = $this->getBaseDatos();
+    $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where year(now())-year(birthdate) < 18');
+
+    $record = $results->fetch_object();
+    $misAlumnos = [];
+    $alumno;
+      foreach($record as $alumno){
+        $alumno = new alumnoI($record);
+			  array_push($misAlumnos,$alumno);
+      }
+    
+    return $alumno;
   }
 	
 	public function get_all_alumnos_con_email_incorrecto(){
-    echo("cosas");
+    return $alumno;
   }
 
 	public function alumnos_no_escribieron_en_blog():array{
-    echo("cosas");
+    return [];
   }
 	
 	public function get_all_alumnos_con_email_de_dominio(string $pDominio){
-    echo("cosas");
+    return $pDominio;
   }
 	
 	public function get_alumno_by_id($pId){
@@ -52,7 +65,7 @@ class ProfesorI implements Profesor {
   }	
 
 	public function get_alumno_by_email(string $pEmail){
-    echo("cosas");
+    return $email;
   }
 
   private function getBaseDatos(){
