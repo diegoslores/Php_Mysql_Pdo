@@ -14,13 +14,14 @@ class ProfesorI implements Profesor {
 	public function get_all_alumnos_mayores_de_edad(){
     $conexion = $this->getBaseDatos();
     $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where year(now())-year(birthdate) >= 18');    
+    $record = $results->fetch_array();
     $misAlumnos = [];
     $alumno;
-    while($record = $results->fetch_assoc()){
-      $alumno = new alumnoI($record);
-			array_push($misAlumnos,$alumno);
+    foreach($record as $unAlumno){
+      $unAlumno = new alumnoI($record);
+			array_push($misAlumnos,$unAlumno);
     }    
-    return $alumno;
+    return $misAlumnos;
   }
 	
 	public function get_all_alumnos_menores_de_edad(){
@@ -53,7 +54,6 @@ class ProfesorI implements Profesor {
     $record = $results->fetch_object();
     $alumno;
     while($record != null){
-      print_r($record);
       $alumno = new alumnoI($record);
       $record = $results->fetch_object();
     }
