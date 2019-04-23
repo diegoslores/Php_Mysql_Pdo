@@ -17,7 +17,6 @@ class ProfesorI implements Profesor {
     $misAlumnos = [];
     $alumno;
     while($record = $results->fetch_assoc()){
-      print_r($record);
       $alumno = new alumnoI($record);
 			array_push($misAlumnos,$alumno);
     }    
@@ -30,7 +29,6 @@ class ProfesorI implements Profesor {
     $misAlumnos = [];
     $alumno;
     while($record = $results->fetch_assoc()){
-      print_r($record);
       $alumno = new alumnoI($record);
 			array_push($misAlumnos,$alumno);
     }
