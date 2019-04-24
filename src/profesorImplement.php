@@ -13,8 +13,8 @@ class ProfesorI implements Profesor {
 	
 	public function get_all_alumnos_mayores_de_edad(){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where year(now())-year(birthdate) >= 18');    
-    $record = $results->fetch_array();
+    $results = $conexion->query('select * from authors where year(now())-year(birthdate) >= 18');    
+    $record = $results->fetch_assoc();
     $misAlumnos = [];
     $alumno;
     foreach($record as $unAlumno){
@@ -26,7 +26,7 @@ class ProfesorI implements Profesor {
 	
 	public function get_all_alumnos_menores_de_edad(){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where year(now())-year(birthdate) < 18');
+    $results = $conexion->query('select * from authors where year(now())-year(birthdate) < 18');
     $misAlumnos = [];
     $alumno;
     while($record = $results->fetch_assoc()){
@@ -50,7 +50,7 @@ class ProfesorI implements Profesor {
 	
 	public function get_alumno_by_id($pId){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query('select id, first_name, last_name, email, birthdate, added from authors where id = '. $pId);
+    $results = $conexion->query('select * from authors where id = '. $pId);
     $record = $results->fetch_object();
     $alumno;
     while($record != null){
@@ -62,7 +62,7 @@ class ProfesorI implements Profesor {
 
 	public function get_alumno_by_email(string $pEmail){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query("select id, first_name, last_name, email, birthdate, added from authors where email = '$pEmail';");
+    $results = $conexion->query("select * from authors where email = '$pEmail';");
     $record = $results->fetch_object();
     $alumno;
     while($record != null){
