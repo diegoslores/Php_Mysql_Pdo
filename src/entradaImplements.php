@@ -2,6 +2,26 @@
 require_once("Entrada.php");
 
 Class EntradaI implements Entrada{
+    
+  //Atributos
+    private $id;
+    private $author_id;
+    private $title;  
+    private $desc;
+    private $content;
+    private $date;
+
+  //constructor
+  
+  public function __construct( $id, $author_id, $title, $desc, $content, $date){    
+    $this->id = $id;
+    $this->author_id = $author_id;
+    $this->title = $title;
+    $this->desc = $desc;
+    $this->content = $content;
+    $this->date = $date;  
+  }
+
 	public function getId():int{
     return $id;
   }

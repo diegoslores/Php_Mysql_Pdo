@@ -13,27 +13,24 @@ class ProfesorI implements Profesor {
 	
 	public function get_all_alumnos_mayores_de_edad(){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query('select * from authors where year(now())-year(birthdate) >= 18');    
-    $record = $results->fetch_assoc();
+    $results = $conexion->query('select * from authors where TIMESTAMPDIFF( YEAR, birthdate, now()) >= 18');    
     $misAlumnos = [];
-    $alumno;
-    foreach($record as $unAlumno){
-      $unAlumno = new alumnoI($record);
-			array_push($misAlumnos,$unAlumno);
-    }    
+    while($row = $results->fetch_object()){
+        $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
+			  array_push($misAlumnos,$alumno);
+    }     
     return $misAlumnos;
   }
 	
 	public function get_all_alumnos_menores_de_edad(){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query('select * from authors where year(now())-year(birthdate) < 18');
+    $results = $conexion->query('select * from authors where TIMESTAMPDIFF( YEAR, birthdate, now()) < 18');
     $misAlumnos = [];
-    $alumno;
-    while($record = $results->fetch_assoc()){
-      $alumno = new alumnoI($record);
-			array_push($misAlumnos,$alumno);
-    }
-    return $alumno;
+    while($row = $results->fetch_object()){
+        $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
+			  array_push($misAlumnos,$alumno);
+    }     
+    return $misAlumnos;
   }
 	
 	public function get_all_alumnos_con_email_incorrecto(){
@@ -52,9 +49,9 @@ class ProfesorI implements Profesor {
     $conexion = $this->getBaseDatos();
     $results = $conexion->query('select * from authors where id = '. $pId);
     $record = $results->fetch_object();
-    $alumno;
+    
     while($record != null){
-      $alumno = new alumnoI($record);
+      $alumno = new alumnoI($record->id, $record->first_name, $record->last_name, $record->email, $record->birthdate, $record->added);
       $record = $results->fetch_object();
     }
     return $alumno;
@@ -64,9 +61,9 @@ class ProfesorI implements Profesor {
     $conexion = $this->getBaseDatos();
     $results = $conexion->query("select * from authors where email = '$pEmail';");
     $record = $results->fetch_object();
-    $alumno;
+    
     while($record != null){
-      $alumno = new alumnoI($record);
+      $alumno = new alumnoI($record->id, $record->first_name, $record->last_name, $record->email, $record->birthdate, $record->added);
       $record = $results->fetch_object();
     }
     return $alumno;
