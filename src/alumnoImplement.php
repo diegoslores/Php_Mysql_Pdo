@@ -96,7 +96,14 @@ Class AlumnoI implements Alumno{
   }
 
 	public function all_mis_entradas_en_el_blog_tituladas(string $pPattern):array{
-    return $array;  
+    $conexion = $this->getBaseDatos();
+    $result = $conexion->query('select * from posts where title = '. $pPattern);
+    $misTitulos = [];  
+    while($row = $result->fetch_object()){
+      $entrada = new EntradaI($row->id, $row->author_id, $row->title, $row->desc, $row->content, $row->date);     
+      array_push($misEntradas,$entrada);
+    } 
+    return $misTitulos;  
   }
 
 	public function all_mis_entradas_en_el_blog_contienen(string $pPattern){

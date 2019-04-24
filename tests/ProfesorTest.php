@@ -25,6 +25,7 @@ final class ProfesorTest extends TestCase {
 		$result = $profesor->get_all_alumnos_mayores_de_edad();
 		
 		$this->assertIsIterable($result);
+		//$this->assertEquals(614, count($result));
 		$this->assertEquals(614, count($result));
 		foreach($result as $unAlumno){
 			$this->assertInstanceOf(Alumno::class, $unAlumno);
@@ -39,6 +40,7 @@ final class ProfesorTest extends TestCase {
 		$result = $profesor->get_all_alumnos_menores_de_edad();
 		
 		$this->assertIsIterable($result);
+		//$this->assertEquals(387, count($result));
 		$this->assertEquals(386, count($result));
 		foreach($result as $unAlumno){
 			$this->assertInstanceOf(Alumno::class, $unAlumno);
