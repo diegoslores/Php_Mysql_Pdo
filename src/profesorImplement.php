@@ -55,7 +55,6 @@ class ProfesorI implements Profesor {
     $record = $results->fetch_object();
     $alumno;
     while($record != null){
-      print_r($record);
       $alumno = new alumnoI($record);
       $record = $results->fetch_object();
     }
