@@ -29,7 +29,7 @@ final class ProfesorTest extends TestCase {
 		foreach($result as $unAlumno){
 			$this->assertInstanceOf(Alumno::class, $unAlumno);
 			if($unAlumno->getEmail()=="quitzon.billy@example.com"){
-				$this->fail('Este alumno de debería figurar');
+				$this->fail('Este alumno no debería figurar');
 			}
 		}
 	}
@@ -43,7 +43,7 @@ final class ProfesorTest extends TestCase {
 		foreach($result as $unAlumno){
 			$this->assertInstanceOf(Alumno::class, $unAlumno);
 			if($unAlumno->getEmail()=="antonina.ankunding@example.com"){
-				$this->fail('Este alumno de debería figurar');
+				$this->fail('Este alumno no debería figurar');
 			}
 		}
 	}

@@ -29,6 +29,16 @@ Class AlumnoI implements Alumno{
       $this->dischargeDate = "dis";
     }
   }
+
+  /*public function __construct( $id, $firstName, $lastName, $email, $birthdate, $dischargeDate){    
+    $this->id = $id;
+    $this->firstName = $firstName;
+    $this->lastName = $lastName;
+    $this->email = $email;
+    $this->birthdate = $birthdate;
+    $this->dischargeDate = $dischargeDate;
+  
+}*/
 	
 	public function getId():int{
     return $this->id;
