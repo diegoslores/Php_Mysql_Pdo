@@ -1,5 +1,6 @@
 <?php
 require_once("Alumno.php");
+require_once("entradaImplements.php");
 
 Class AlumnoI implements Alumno{
 
@@ -12,25 +13,7 @@ Class AlumnoI implements Alumno{
   private $dischargeDate;
 
   //Constructor
-  public function __construct($object = null){
-    if ($object != null) {
-      $this->id = $object->id;
-      $this->firstName = $object->first_name;
-      $this->lastName = $object->last_name;
-      $this->email = $object->email;
-      $this->birthdate = $object->birthdate;
-      $this->dischargeDate = $object->added;
-    }else{
-      $this->id = 1;
-      $this->firstName ="name";
-      $this->lastName = "lastname";
-      $this->email = "mail";
-      $this->birthdate = "birth";
-      $this->dischargeDate = "dis";
-    }
-  }
-
-  /*public function __construct( $id, $firstName, $lastName, $email, $birthdate, $dischargeDate){    
+  public function __construct( $id, $firstName, $lastName, $email, $birthdate, $dischargeDate){    
     $this->id = $id;
     $this->firstName = $firstName;
     $this->lastName = $lastName;
@@ -38,7 +21,7 @@ Class AlumnoI implements Alumno{
     $this->birthdate = $birthdate;
     $this->dischargeDate = $dischargeDate;
   
-}*/
+  }
 	
 	public function getId():int{
     return $this->id;
@@ -104,16 +87,23 @@ Class AlumnoI implements Alumno{
 	public function all_mis_entradas_en_el_blog() : array{
     $conexion = $this->getBaseDatos();
     $result = $conexion->query('select * from posts where author_id ='. $this->id);
-    $record = $result->fetch_object();
-    $misEntradas = [];    
-    foreach($record as $entrada){
-			array_push($misEntradas,$entrada);
-    }
+    $misEntradas = [];  
+    while($row = $result->fetch_object()){
+      $entrada = new EntradaI($row->id, $row->author_id, $row->title, $row->desc, $row->content, $row->date);     
+      array_push($misEntradas,$entrada);
+    } 
     return $misEntradas;
   }
 
 	public function all_mis_entradas_en_el_blog_tituladas(string $pPattern):array{
-    return $array;  
+    $conexion = $this->getBaseDatos();
+    $result = $conexion->query('select * from posts where title = '. $pPattern);
+    $misTitulos = [];  
+    while($row = $result->fetch_object()){
+      $entrada = new EntradaI($row->id, $row->author_id, $row->title, $row->desc, $row->content, $row->date);     
+      array_push($misEntradas,$entrada);
+    } 
+    return $misTitulos;  
   }
 
 	public function all_mis_entradas_en_el_blog_contienen(string $pPattern){
