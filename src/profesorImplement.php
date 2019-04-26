@@ -39,18 +39,24 @@ class ProfesorI implements Profesor {
 
 	public function alumnos_no_escribieron_en_blog():array{
     $conexion = $this->getBaseDatos();
-    $result1 = $conexion->query('select id from authors');
-    $result2 = $conexion->query('select author_id from posts');
+    $result = $conexion->query('select * from authors where id not in (select author_id from posts)');
     $misAlumnos = [];
-    while($row = $results->fetch_object()){
+    while($row = $result->fetch_object()){
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
 			  array_push($misAlumnos,$alumno);
     }     
     return $misAlumnos;
   }
 	
-	public function get_all_alumnos_con_email_de_dominio(string $pDominio){
-    return $pDominio;
+	public function get_all_alumnos_con_email_de_dominio(string $pDominio){    
+    $conexion = $this->getBaseDatos();
+    $result = $conexion->query("select * from authors where email like '%".$pDominio."'");    
+    $misAlumnos = [];
+    while($row = $result->fetch_object()){
+        $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
+			  array_push($misAlumnos,$alumno);
+    }     
+    return $misAlumnos;
   }
 	
 	public function get_alumno_by_id($pId){

@@ -5,13 +5,13 @@ use PHPUnit\Framework\TestCase;
 
 final class AlumnoTest extends TestCase {
 	
-//	private static $log;
+	private static $log;
 	private static $profesor;
 	
 	public static function setUpBeforeClass(){
-		/*Logger::configure('configs/log4php-config.xml');
+		Logger::configure('configs/log4php-config.xml');
 		self::$log = Logger::getLogger("test");
-		self::$log->info("Comienza el test ". get_called_class());*/
+		self::$log->info("Comienza el test ". get_called_class());
 		self::$profesor = FactoryProfesor::getInstance()->fabrica();
 	}
 	

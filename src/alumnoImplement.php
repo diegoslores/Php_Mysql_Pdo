@@ -96,9 +96,9 @@ Class AlumnoI implements Alumno{
   }
 
 	public function all_mis_entradas_en_el_blog_tituladas(string $pPattern):array{
-    $palabro = "'%".$pPattern."%'";
+    
     $conexion = $this->getBaseDatos();
-    $result = $conexion->query("select * from posts where title like ". $palabro." and author_id = 406");
+    $result = $conexion->query("select * from posts where title like '%".$pPattern."%' and author_id = 406");
     $misTitulos = [];  
     while($row = $result->fetch_object()){
       $titulo = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
@@ -108,9 +108,8 @@ Class AlumnoI implements Alumno{
   }
 
 	public function all_mis_entradas_en_el_blog_contienen(string $pPattern){
-    $palabro = "'%".$pPattern."%'";
     $conexion = $this->getBaseDatos();
-    $result = $conexion->query("select * from posts where content like ". $palabro." and author_id = 406");    
+    $result = $conexion->query("select * from posts where content like '%".$pPattern."%' and author_id = 406");    
     $misContenidos = [];  
     while($row = $result->fetch_object()){
       $contenido = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
