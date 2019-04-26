@@ -34,7 +34,14 @@ class ProfesorI implements Profesor {
   }
 	
 	public function get_all_alumnos_con_email_incorrecto(){
-    return $alumno;
+    $conexion = $this->getBaseDatos();
+    $result = $conexion->query("select * from authors where email REGEXP '(.*)@(.*)\.(.*)'");
+    $misAlumnos = [];
+    while($row = $result->fetch_object()){
+        $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
+			  array_push($misAlumnos,$alumno);
+    }     
+    return $misAlumnos;
   }
 
 	public function alumnos_no_escribieron_en_blog():array{
@@ -62,8 +69,7 @@ class ProfesorI implements Profesor {
 	public function get_alumno_by_id($pId){
     $conexion = $this->getBaseDatos();
     $results = $conexion->query('select * from authors where id = '. $pId);
-    $record = $results->fetch_object();
-    
+    $record = $results->fetch_object();    
     while($record != null){
       $alumno = new alumnoI($record->id, $record->first_name, $record->last_name, $record->email, $record->birthdate, $record->added);
       $record = $results->fetch_object();
@@ -74,8 +80,7 @@ class ProfesorI implements Profesor {
 	public function get_alumno_by_email(string $pEmail){
     $conexion = $this->getBaseDatos();
     $results = $conexion->query("select * from authors where email = '$pEmail';");
-    $record = $results->fetch_object();
-    
+    $record = $results->fetch_object();    
     while($record != null){
       $alumno = new alumnoI($record->id, $record->first_name, $record->last_name, $record->email, $record->birthdate, $record->added);
       $record = $results->fetch_object();
