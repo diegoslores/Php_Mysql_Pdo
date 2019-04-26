@@ -89,25 +89,34 @@ Class AlumnoI implements Alumno{
     $result = $conexion->query('select * from posts where author_id ='. $this->id);
     $misEntradas = [];  
     while($row = $result->fetch_object()){
-      $entrada = new EntradaI($row->id, $row->author_id, $row->title, $row->desc, $row->content, $row->date);     
+      $entrada = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
       array_push($misEntradas,$entrada);
     } 
     return $misEntradas;
   }
 
 	public function all_mis_entradas_en_el_blog_tituladas(string $pPattern):array{
+    $palabro = "'%".$pPattern."%'";
     $conexion = $this->getBaseDatos();
-    $result = $conexion->query('select * from posts where title = '. $pPattern);
+    $result = $conexion->query("select * from posts where title like ". $palabro." and author_id = 406");
     $misTitulos = [];  
     while($row = $result->fetch_object()){
-      $entrada = new EntradaI($row->id, $row->author_id, $row->title, $row->desc, $row->content, $row->date);     
-      array_push($misEntradas,$entrada);
+      $titulo = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
+      array_push($misTitulos,$titulo);
     } 
-    return $misTitulos;  
+    return $misTitulos;
   }
 
 	public function all_mis_entradas_en_el_blog_contienen(string $pPattern){
-    return $array;  
+    $palabro = "'%".$pPattern."%'";
+    $conexion = $this->getBaseDatos();
+    $result = $conexion->query("select * from posts where content like ". $palabro." and author_id = 406");    
+    $misContenidos = [];  
+    while($row = $result->fetch_object()){
+      $contenido = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
+      array_push($misContenidos,$contenido);
+    } 
+    return $misContenidos;  
   }
 	
 	public function remove_mis_entradas_en_el_blog_tituladas(string $pPattern){

@@ -13,7 +13,7 @@ class ProfesorI implements Profesor {
 	
 	public function get_all_alumnos_mayores_de_edad(){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query('select * from authors where TIMESTAMPDIFF( YEAR, birthdate, now()) >= 18');    
+    $results = $conexion->query('select * from authors where TIMESTAMPDIFF( YEAR, birthdate, "2019-03-29") >= 18');    
     $misAlumnos = [];
     while($row = $results->fetch_object()){
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
@@ -24,7 +24,7 @@ class ProfesorI implements Profesor {
 	
 	public function get_all_alumnos_menores_de_edad(){
     $conexion = $this->getBaseDatos();
-    $results = $conexion->query('select * from authors where TIMESTAMPDIFF( YEAR, birthdate, now()) < 18');
+    $results = $conexion->query('select * from authors where TIMESTAMPDIFF( YEAR, birthdate,"2019-03-29") < 18');
     $misAlumnos = [];
     while($row = $results->fetch_object()){
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
@@ -38,7 +38,15 @@ class ProfesorI implements Profesor {
   }
 
 	public function alumnos_no_escribieron_en_blog():array{
-    return [];
+    $conexion = $this->getBaseDatos();
+    $result1 = $conexion->query('select id from authors');
+    $result2 = $conexion->query('select author_id from posts');
+    $misAlumnos = [];
+    while($row = $results->fetch_object()){
+        $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
+			  array_push($misAlumnos,$alumno);
+    }     
+    return $misAlumnos;
   }
 	
 	public function get_all_alumnos_con_email_de_dominio(string $pDominio){

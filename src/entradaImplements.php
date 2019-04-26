@@ -7,17 +7,17 @@ Class EntradaI implements Entrada{
     private $id;
     private $author_id;
     private $title;  
-    private $desc;
+    private $description;
     private $content;
     private $date;
 
   //constructor
   
-  public function __construct( $id, $author_id, $title, $desc, $content, $date){    
+  public function __construct( $id, $author_id, $title, $description, $content, $date){    
     $this->id = $id;
     $this->author_id = $author_id;
     $this->title = $title;
-    $this->desc = $desc;
+    $this->description = $description;
     $this->content = $content;
     $this->date = $date;  
   }
