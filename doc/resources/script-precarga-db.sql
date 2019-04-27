@@ -1,10 +1,10 @@
 CREATE DATABASE IF NOT EXISTS dwcs_mysqli_dbo;
 
-USE dwcs_mysqli_dbo
+USE dwcs_mysqli_dbo;
 
 
-CREATE USER IF NOT EXISTS 'dwcs'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123.';
-GRANT ALL PRIVILEGES ON dwcs_mysqli_dbo.* TO 'dwcs'@'localhost' WITH GRANT OPTION;
+# CREATE USER IF NOT EXISTS 'dwcs'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123.';
+# GRANT ALL PRIVILEGES ON dwcs_mysqli_dbo.* TO 'dwcs'@'localhost' WITH GRANT OPTION;
 
 
 # Generated with http://filldb.info/dummy

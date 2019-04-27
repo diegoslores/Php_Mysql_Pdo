@@ -95,6 +95,7 @@ class ProfesorI implements Profesor {
     return $alumno;
   }
 
+  //Función para conectar a base de datos
   private function getBaseDatos(){
     $conexion = new mysqli("127.0.0.1" , "dwcs" , "abc123." , "dwcs_mysqli_dbo");
     return $conexion;

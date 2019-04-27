@@ -23,26 +23,26 @@ Class EntradaI implements Entrada{
   }
 
 	public function getId():int{
-    return $id;
+    return $this->id;
   }
 	
 	public function getAlumno():Alumno{
-    return $alumno;
+    return $this->author_id;
   }
 	
 	public function getTitulo():string{
-    return $titulo;
+    return $this->title;
   }
 	
 	public function getContent():string{
-    return $content;
+    return $this->content;
   }
 	
 	public function getDescripction():string{
-    return $description;
+    return $this->description;
   }
 	
 	public function getDate(){
-    return $date;
+    return $this->date;
   }
 }
