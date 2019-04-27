@@ -35,7 +35,7 @@ class ProfesorI implements Profesor {
 	
 	public function get_all_alumnos_con_email_incorrecto(){
     $conexion = $this->getBaseDatos();
-    $result = $conexion->query("select * from authors where email REGEXP '(.*)@(.*)\.(.*)'");
+    $result = $conexion->query("select * from authors where email REGEXP '(.*)\.(.*)@(.*)\.(.*)' limit 5");
     $misAlumnos = [];
     while($row = $result->fetch_object()){
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
