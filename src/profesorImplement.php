@@ -18,7 +18,8 @@ class ProfesorI implements Profesor {
     while($row = $results->fetch_object()){
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
 			  array_push($misAlumnos,$alumno);
-    }     
+    }   
+    $conexion->close();  
     return $misAlumnos;
   }
 	
@@ -29,7 +30,8 @@ class ProfesorI implements Profesor {
     while($row = $results->fetch_object()){
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
 			  array_push($misAlumnos,$alumno);
-    }     
+    } 
+    $conexion->close();    
     return $misAlumnos;
   }
 	
@@ -41,6 +43,7 @@ class ProfesorI implements Profesor {
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
 			  array_push($misAlumnos,$alumno);
     }     
+    $conexion->close();
     return $misAlumnos;
   }
 
@@ -52,6 +55,7 @@ class ProfesorI implements Profesor {
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
 			  array_push($misAlumnos,$alumno);
     }     
+    $conexion->close();
     return $misAlumnos;
   }
 	
@@ -62,7 +66,8 @@ class ProfesorI implements Profesor {
     while($row = $result->fetch_object()){
         $alumno = new AlumnoI($row->id, $row->first_name, $row->last_name, $row->email, $row->birthdate, $row->added);      
 			  array_push($misAlumnos,$alumno);
-    }     
+    }  
+    $conexion->close();   
     return $misAlumnos;
   }
 	
@@ -74,6 +79,7 @@ class ProfesorI implements Profesor {
       $alumno = new alumnoI($record->id, $record->first_name, $record->last_name, $record->email, $record->birthdate, $record->added);
       $record = $results->fetch_object();
     }
+    $conexion->close();
     return $alumno;
   }	
 
@@ -85,6 +91,7 @@ class ProfesorI implements Profesor {
       $alumno = new alumnoI($record->id, $record->first_name, $record->last_name, $record->email, $record->birthdate, $record->added);
       $record = $results->fetch_object();
     }
+    $conexion->close();
     return $alumno;
   }
 

@@ -69,6 +69,7 @@ Class AlumnoI implements Alumno{
     }else{
       $flag = false;
     }
+    $conexion->close();
     return $flag;
   }
 
@@ -81,6 +82,7 @@ Class AlumnoI implements Alumno{
     }else{
       $flag = false;
     }
+    $conexion->close();
     return $flag;
   }
 
@@ -92,6 +94,7 @@ Class AlumnoI implements Alumno{
       $entrada = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
       array_push($misEntradas,$entrada);
     } 
+    $conexion->close();
     return $misEntradas;
   }
 
@@ -104,6 +107,7 @@ Class AlumnoI implements Alumno{
       $titulo = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
       array_push($misTitulos,$titulo);
     } 
+    $conexion->close();
     return $misTitulos;
   }
 
@@ -115,18 +119,24 @@ Class AlumnoI implements Alumno{
       $contenido = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
       array_push($misContenidos,$contenido);
     } 
+    $conexion->close();
     return $misContenidos;  
   }
 	
 	public function remove_mis_entradas_en_el_blog_tituladas(string $pPattern){
-    return $array;  
+    $conexion = $this->getBaseDatos();
+    //$result = $conexion->query("delete from posts where title like '%".$pPattern."%' and author_id = 406");
+    $conexion->close();  
   }
 	
 	public function remove_mis_entradas_en_el_blog_contienen(string $pPattern){
-    return $array;  
+    $conexion = $this->getBaseDatos();
+    //$result = $conexion->query("delete from posts where content like '%".$pPattern."%' and author_id = 405");
+    $conexion->close();  
   }
 	
 	public function nueva_entrada_en_blog(string $pTitulo, string $pDescripcion, string $pContenido){
+    $conexion->close();
     return $array;
   }
   
