@@ -67,26 +67,24 @@ Class AlumnoI implements Alumno{
     $this->baseDeDatosOriginal();
 
     $result = $conexion->query('select count(id) from posts where author_id = '. $this->id);
-    $row = $result->fetch_row();
+    $row = $result->fetch();
     if ($row[0] > 0){
       $flag = true;
     }else{
       $flag = false;
     }
-    $conexion->close();
     return $flag;
   }
 
 	public function soy_mayor_de_edad(): bool{
     $conexion = $this->getBaseDatos();
     $result = $conexion->query('SELECT TIMESTAMPDIFF( YEAR, birthdate, now() ) AS Age from authors where id= '. $this->id);
-    $row = $result->fetch_row();
+    $row = $result->fetch();
     if ($row[0] >=18){
       $flag = true;
     }else{
       $flag = false;
     }
-    $conexion->close();
     return $flag;
   }
 
@@ -94,11 +92,10 @@ Class AlumnoI implements Alumno{
     $conexion = $this->getBaseDatos();
     $result = $conexion->query('select * from posts where author_id ='. $this->id);
     $misEntradas = [];  
-    while($row = $result->fetch_object()){
-      $entrada = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
+    while($row = $result->fetch()){
+      $entrada = new EntradaI($row['id'], $row['author_id'], $row['title'], $row['description'], $row['content'], $row['date']);     
       array_push($misEntradas,$entrada);
     } 
-    $conexion->close();
     return $misEntradas;
   }
 
@@ -107,11 +104,10 @@ Class AlumnoI implements Alumno{
     $conexion = $this->getBaseDatos();
     $result = $conexion->query("select * from posts where title like '%".$pPattern."%' and author_id =". $this->id);
     $misTitulos = [];  
-    while($row = $result->fetch_object()){
-      $titulo = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
+    while($row = $result->fetch()){
+      $titulo = new EntradaI($row['id'], $row['author_id'], $row['title'], $row['description'], $row['content'], $row['date']);     
       array_push($misTitulos,$titulo);
     } 
-    $conexion->close();
     return $misTitulos;
   }
 
@@ -119,40 +115,63 @@ Class AlumnoI implements Alumno{
     $conexion = $this->getBaseDatos();
     $result = $conexion->query("select * from posts where content like '%".$pPattern."%' and author_id =". $this->id);    
     $misContenidos = [];  
-    while($row = $result->fetch_object()){
-      $contenido = new EntradaI($row->id, $row->author_id, $row->title, $row->description, $row->content, $row->date);     
+    while($row = $result->fetch()){
+      $contenido = new EntradaI($row['id'], $row['author_id'], $row['title'], $row['description'], $row['content'], $row['date']);     
       array_push($misContenidos,$contenido);
     } 
-    $conexion->close();
     return $misContenidos;  
   }
 	
 	public function remove_mis_entradas_en_el_blog_tituladas(string $pPattern){
     $conexion = $this->getBaseDatos();
     $result = $conexion->query("delete from posts where title like '%".$pPattern."%' and author_id =". $this->id); 
-    $conexion->close();  
   }
 	
 	public function remove_mis_entradas_en_el_blog_contienen(string $pPattern){
     $conexion = $this->getBaseDatos();
     $result = $conexion->query("delete from posts where content like '%".$pPattern."%' and author_id =". $this->id); 
-    $conexion->close();  
   }
 	
 	public function nueva_entrada_en_blog(string $pTitulo, string $pDescripcion, string $pContenido){
     $conexion = $this->getBaseDatos();
-    $result = $conexion->query("insert into posts values (default, ".$this->id.", '".$pTitulo."', '".$pDescripcion."', '".$pContenido."', curdate() )");
-    $conexion->close();
+    $result = $conexion->exec("insert into posts values (default, ".$this->id.", '".$pTitulo."', '".$pDescripcion."', '".$pContenido."', curdate() )");
   }
   
-  //Función para conectar a base de datos
+  //Función para conectar a la base de datos
   private function getBaseDatos(){
-    $conexion = new mysqli("127.0.0.1" , "dwcs" , "abc123." , "dwcs_mysqli_dbo");
+    //$conexion = new mysqli("127.0.0.1" , "dwcs" , "abc123." , "dwcs_mysqli_dbo");
+    $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
+    $conexion = new PDO('mysql:host=127.0.0.1;dbname=dwcs_mysqli_dbo', 'dwcs', 'abc123.', $opciones);
     return $conexion;
   }
 
-  //Función para precargar la base de datos original ejecutando el script dado directamente al cargar y ejecutar los tests.
+  //Función para precargar la base de datos original ejecutando el script dado directamente al cargar y ejecutar los tests. 
+  //Para sobreescribir el borrado de de datos que se hace con remove entradas. 
   private function baseDeDatosOriginal(){
+    $pdo = $this->getBaseDatos();
+    // open script file
+    $sqlScript = 'doc/resources/script-precarga-db.sql';
+    $scriptfile = fopen($sqlScript, "r");
+    if (!$scriptfile) { die("ERROR: Couldn't open {$scriptfile}.\n"); }
+
+    // grab each line of file, skipping comments and blank lines
+    $script = '';
+    while (($line = fgets($scriptfile)) !== false) {
+      $line = trim($line);
+      if(preg_match("/^#|^--|^$/", $line)){ continue; } 
+      $script .= $line;
+    }
+
+    // explode script by semicolon and run each statement
+    $statements = explode(';', $script);
+    foreach($statements as $sql){
+      if($sql === '') { continue; }
+      $query = $pdo->prepare($sql);
+      $query->execute();
+      if($query->errorCode() !== '00000'){ die("ERROR: SQL error code: ".$query->errorCode()."\n"); }
+    }
+
+    /*MSQLI
     $query = '';
     $sqlScript = file('doc/resources/script-precarga-db.sql');
     foreach ($sqlScript as $line){            
@@ -165,7 +184,7 @@ Class AlumnoI implements Alumno{
       if ($endWith == ';') {
         mysqli_query($this->getBaseDatos(),$query) or die('<div>Problem in executing the SQL query <b>' . $query. '</b></div>');
         $query= '';             
-      }
-    }
+      } 
+    }*/   
   }
 }
